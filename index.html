@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+    <style>
+      [contenteditable] {
+        outline: 0px solid transparent;
+      }
+
+      #editor {
+        box-sizing: border-box;
+        font-size: 18px;
+        width: 100%;
+        height: 400px;
+        padding: 15px;
+        margin-bottom: 25px;
+        border: 1px solid gray;
+        font-family: monospace;
+        font-size: 15px;
+        color: darkolivegreen;
+      }
+
+      #editor:empty:before {
+        content: attr(placeholder);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>HTML Editor</h1>
+    <div id="focusStealer" />
+    <div id="editor" placeholder="Enter your text here" contenteditable="true"></div>
+    <div id="actionButtons">
+      <button id="btn-bold">bold</button>
+      <button id="btn-italic">italic</button>
+      <button id="btn-underline">underline</button>
+    </div>
+    <script>
+      const editor = document.querySelector('#editor')
+      const btnBold = document.querySelector('#btn-bold')
+
+      function getSelectionIndexes() {
+        const selection = document.getSelection()
+
+        if (selection.isCollapsed) {
+          return null
+        }
+
+        const { anchorOffset: indexStart, focusOffset: indexEnd } = selection
+
+        console.log('selection', selection)
+
+        return indexStart < indexEnd ? [indexStart, indexEnd] : [indexEnd, indexStart]
+      }
+
+      btnBold.addEventListener('click', function () {
+        const indexes = getSelectionIndexes()
+
+        if (indexes) {
+          const editorContent = editor.innerHTML
+
+          const newContent = [
+            editorContent.slice(0, indexes[0]),
+            '<b>',
+            editorContent.slice(indexes[0], indexes[1]),
+            '</b>',
+            editorContent.slice(indexes[1]),
+          ].join('')
+
+          editor.innerHTML = newContent
+        }
+      })
+    </script>
+  </body>
+</html>
