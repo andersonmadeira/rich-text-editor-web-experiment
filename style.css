@@ -8,7 +8,7 @@
   width: 100%;
   height: 400px;
   padding: 15px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   border: 1px solid gray;
   font-family: monospace;
   font-size: 15px;
@@ -17,4 +17,10 @@
 
 #editor:empty:before {
   content: attr(placeholder);
+}
+
+#actionButtons button {
+  padding: 5px 8px;
+  cursor: pointer;
+  margin-left: 5px;
 }
