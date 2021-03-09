@@ -1,34 +1,23 @@
-const editor = document.querySelector('#editor')
 const btnBold = document.querySelector('#btn-bold')
+const btnItalic = document.querySelector('#btn-italic')
+const btnUnderline = document.querySelector('#btn-underline')
 
-function getSelectionIndexes() {
+function applyFormattingToSelection(tag) {
   const selection = document.getSelection()
 
   if (selection.isCollapsed) {
-    return null
+    console.log('nothing selected')
+    return
   }
 
-  const { anchorOffset: indexStart, focusOffset: indexEnd } = selection
+  const range = selection.getRangeAt(0)
+  const newParent = document.createElement(tag)
 
-  console.log('selection', selection)
+  newParent.appendChild(range.extractContents())
 
-  return indexStart < indexEnd ? [indexStart, indexEnd] : [indexEnd, indexStart]
+  range.insertNode(newParent)
 }
 
-btnBold.addEventListener('click', function () {
-  const indexes = getSelectionIndexes()
-
-  if (indexes) {
-    const editorContent = editor.innerHTML
-
-    const newContent = [
-      editorContent.slice(0, indexes[0]),
-      '<b>',
-      editorContent.slice(indexes[0], indexes[1]),
-      '</b>',
-      editorContent.slice(indexes[1]),
-    ].join('')
-
-    editor.innerHTML = newContent
-  }
-})
+btnBold.addEventListener('click', () => applyFormattingToSelection('b'))
+btnItalic.addEventListener('click', () => applyFormattingToSelection('i'))
+btnUnderline.addEventListener('click', () => applyFormattingToSelection('u'))

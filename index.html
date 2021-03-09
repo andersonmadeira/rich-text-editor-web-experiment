@@ -5,7 +5,17 @@
     <title>Rich-Text Editor Experiment</title>
   </head>
   <body>
-    <div id="editor" placeholder="Start something great..." contenteditable="true"></div>
+    <div
+      id="editor"
+      placeholder="Start something great..."
+      contenteditable="true"
+      spellcheck="false"
+    >
+      <p id="p">
+        This is a placeholder text with <i>italic</i> and <b>bold</b> but we have another
+        <b>bold</b> and also <u>underline</u> here.
+      </p>
+    </div>
     <div id="actionButtons">
       <button id="btn-bold">
         <svg
